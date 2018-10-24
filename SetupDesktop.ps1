@@ -86,8 +86,8 @@
     Log -color Green "Desktop setup complete!"
 
     #1CF VSTS Extension
-    Log "Installing VSTS Extension"
-    code --install-extension ms-vsts.team
+    #Log "Installing VSTS Extension"
+    #code --install-extension ms-vsts.team
 }
 catch {
     Log -color Red -line ($Error[0].ToString() + " (" + ($Error[0].ScriptStackTrace -split '\r\n')[0] + ")")
