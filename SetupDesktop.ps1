@@ -13,6 +13,7 @@ Log -color Green "Setting up Desktop Experience"
 
 $codeCmd = "$([Environment]::GetFolderPath('LocalApplicationData'))\Programs\Microsoft VS Code\bin\Code.cmd"
 $codeExe = "$([Environment]::GetFolderPath('LocalApplicationData'))\Programs\Microsoft VS Code\Code.exe"
+    
 $firsttime = (!(Test-Path $codeExe))
 $disableVsCodeUpdate = $false
 
@@ -24,6 +25,7 @@ if ($firsttime) {
     if (!(Test-Path $Filename)) {
         #$sourceUrl = "https://go.microsoft.com/fwlink/?Linkid=852157"
         $sourceUrl = "https://www.dropbox.com/s/xoaxk41u3mh73s3/VSCodeSetup-stable.exe?dl=1"
+
         Download-File -SourceUrl $sourceUrl -destinationFile $Filename
     }
     
@@ -34,12 +36,12 @@ if ($firsttime) {
     Log "Downloading samples"
     $Folder = "C:\DOWNLOAD"
     $Filename = "$Folder\samples.zip"
-    Download-File -sourceUrl "https://www.github.com/Microsoft/AL/archive/master.zip" -destinationFile $filename
+    Download-File -sourceUrl "https://www.dropbox.com/s/ql2221rei6hwbag/AL-master.zip?dl=1" -destinationFile $filename
 
     Remove-Item -Path "$folder\AL-master" -Force -Recurse -ErrorAction Ignore | Out-null
     [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
     [System.IO.Compression.ZipFile]::ExtractToDirectory($filename, $folder)
-    
+
     $alFolder = "$([Environment]::GetFolderPath("MyDocuments"))\AL"
     Remove-Item -Path "$alFolder\Samples" -Recurse -Force -ErrorAction Ignore | Out-Null
     Remove-Item -Path "$alFolder\snippets" -Recurse -Force -ErrorAction Ignore | Out-Null

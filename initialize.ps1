@@ -167,7 +167,7 @@ Download-File -sourceUrl "${scriptPath}SetupNavContainer.ps1" -destinationFile $
 Download-File -sourceUrl "${scriptPath}SetupVm.ps1"           -destinationFile $setupVmScript
 Download-File -sourceUrl "${scriptPath}SetupStart.ps1"        -destinationFile $setupStartScript
 Download-File -sourceUrl "${scriptPath}Servers.csv" -destinationFile 'C:\DEMO\Servers.csv' #1CF
-Download-File -sourceUrl "${scriptPath}Install-VS2017Community.ps1" -destinationFile "C:\DEMO\Install-VS2017Community.ps1"
+#Download-File -sourceUrl "${scriptPath}Install-VS2017Community.ps1" -destinationFile "C:\DEMO\Install-VS2017Community.ps1"
 Download-File -sourceUrl "${scriptPath}RestartNST.ps1" -destinationFile "C:\DEMO\RestartNST.ps1"
 
 
@@ -180,11 +180,11 @@ if ($finalSetupScriptUrl) {
 if ($licenseFileUri -ne "") {
     Download-File -sourceUrl $licenseFileUri -destinationFile "c:\demo\license.flf"
 }
-
+<#
 if ($fobFileUrl -ne "") {
     Download-File -sourceUrl $fobFileUrl -destinationFile "c:\demo\objects.fob"
 }
-
+#>
 if ($workshopFilesUrl -ne "") {
     $workshopFilesFolder = "c:\WorkshopFiles"
     $workshopFilesFile = "C:\DOWNLOAD\WorkshopFiles.zip"
@@ -217,8 +217,8 @@ if ($dnsidentity.StartsWith("*")) {
 }
 ') | Add-Content "c:\myfolder\SetupCertificate.ps1"
 }
-
-$workshopFilesUrl = 'https://www.dropbox.com/s/pk5ej2sf50zghap/Workshopfiles.zip?dl=1'
+<#
+$workshopFilesUrl = 'https://www.dropbox.com/s/ubt7zdqvvlagzqx/Workshopfiles_AA.zip?dl=1'
 
 #1CF custom download of workshop files
 $downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'
@@ -232,8 +232,8 @@ New-Item -Path $workshopFilesFolder -ItemType Directory -ErrorAction Ignore |Out
 Download-File -sourceUrl $workshopFilesUrl -destinationFile $workshopFilesFile
 [Reflection.Assembly]::LoadWithPartialName("System.IO.Compression.Filesystem") | Out-Null
 [System.IO.Compression.ZipFile]::ExtractToDirectory($workshopFilesFile, $workshopFilesFolder)
-git config --global user.email "stdextv2@gmail.com"
-git config --global user.name "1clickfactory-student"
+git config --global user.email "extensionsv2training@gmail.com"
+git config --global user.name "ExtensionV2Training"
 git config --global merge.tool p4merge
 git config --global mergeool.p4merge.path ''C:\Program Files\Perforce\p4merge.exe''
 ')| Add-Content $downloadWorkshopFilesScript |Out-Null
@@ -245,6 +245,6 @@ Register-ScheduledTask -TaskName "SetupStart" `
                        -Trigger $startupTrigger `
                        -RunLevel Highest `
                        -User System | Out-Null
-
+#>
 Log "Restarting computer and start Installation tasks"
 Restart-Computer -Force

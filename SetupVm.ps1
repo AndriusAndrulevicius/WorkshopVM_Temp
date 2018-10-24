@@ -74,7 +74,10 @@ Start-Process $openXmlFile -argumentList "/qn /q /passive" -wait
 . "c:\demo\SetupDesktop.ps1"
 . "c:\demo\SetupWorkshop.ps1"
 
-#docker pull microsoft/dynamics-nav:devpreview
+<#
+Log "Pulling microsoft/dynamics-nav:devpreview"
+docker pull microsoft/dynamics-nav:devpreview
+Log "Pull complete"
 
 $downloadWorkshopFilesScript = 'c:\Demo\DownloadWorkshopFiles\DownloadWorkshopFiles.ps1'
 $logonAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $downloadWorkshopFilesScript
@@ -84,6 +87,7 @@ Register-ScheduledTask -TaskName "RenewWorkshopAtLogon" `
                         -Trigger $logonTrigger `
                         -RunLevel Highest `
                         -User $vmAdminUsername | Out-Null
+#>
 
 
 

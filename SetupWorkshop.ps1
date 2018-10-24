@@ -1,6 +1,4 @@
-﻿. (Join-Path $PSScriptRoot "Install-VS2017Community.ps1")
-
-try {
+﻿try {
     $Folder = "C:\DOWNLOAD\AdobeReader"
     $Filename = "$Folder\AdbeRdr11010_en_US.exe"
     New-Item $Folder -itemtype directory -ErrorAction ignore | Out-Null
@@ -30,58 +28,11 @@ try {
     Download-File -sourceUrl $sqlrepbuilderURL -destinationFile  $sqlrepbuilderPath
     Start-Process "C:\Windows\System32\msiexec.exe" -argumentList "/i $sqlrepbuilderPath /quiet" -wait
 
-    #1CF Setup GIT
-    Log "Installing GIT"
-    $gitUrl = "https://www.dropbox.com/s/t0ajl5m7hs07r0y/git.exe?dl=1"
-    $gitSavePath = "C:\Download\git.exe"
-
-    Download-File -sourceUrl $gitUrl -destinationFile $gitSavePath
-    #$commandLineGitOptions = '/Dir="G:\Git" /SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS'
-    $commandLineGitOptions = '/SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS'
-    Start-Process -Wait -FilePath $gitSavePath -ArgumentList $commandLineGitOptions
-
-    #1CF Setup P4Merge
-
-    Log "Installing P4Merge"
-    $p4mUrl = "https://www.dropbox.com/s/xnmcp9ztfqv0dyy/p4vinst.exe?dl=1"
-    $p4mSavePath = "C:\Download\p4m.exe"
-
-    Download-File -sourceUrl $p4mUrl -destinationFile $p4mSavePath
-    #$commandLineMergeOptions = '/b"C:\Downloads\p4vinst64.exe" /S /V"/qn ALLUSERS=1 REBOOT=ReallySuppress"'
-    $commandLineMergeOptions = '/S /V"/qn ALLUSERS=1 REBOOT=ReallySuppress"'
-    Start-Process -Wait -FilePath $p4mSavePath -ArgumentList $commandLineMergeOptions
-
-    #1CF Setup Chrome
-    Log "Installing Chrome"
-    $chromeUrl = "https://www.dropbox.com/s/kiqfzeh9j1n9czb/ChromeSetup.exe?dl=1"
-    $chromeSavePath = "C:\Download\chrome.exe"
-
-    Download-File -sourceUrl $chromeUrl -destinationFile $chromeSavePath
-    Start-Process -FilePath $chromeSavePath -Args "/silent /install" -Verb RunAs -Wait
-    Log "Chrome Installed"
-
-    #1CF install Signtool not needed as visual studio will be installed    
-    # $SignToolUrl = "https://download.microsoft.com/download/A/6/A/A6AC035D-DA3F-4F0C-ADA4-37C8E5D34E3D/winsdk_web.exe"
-    # $signtoolPath = "C:\Download\winsdk_web.exe"
-    # $commandLineSignToolOptions = '/SetupType=default /SP- /VERYSILENT /SUPPRESSMSGBOXES /FORCECLOSEAPPLICATIONS '
-    
-    # Download-File -sourceUrl $SignToolUrl -destinationFile $signtoolPath
-    # Start-Process -Wait -FilePath $signtoolPath -ArgumentList $commandLineSignToolOptions
-    
-    Log "Updating navsip.dll for signtool"
-    docker exec -it navdemo1 powershell "copy-item -Path 'C:\Windows\SysWOW64\NavSip.dll' -Destination 'C:\Demo\extensions\navdemo1\my\navsip.dll' -force"
-    copy-item -Path "C:\Demo\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\System32\" -Force -ErrorAction SilentlyContinue
-    copy-item -Path "c:\Demo\Extensions\navdemo1\my\NavSip.dll" -Destination "C:\Windows\syswow64\" -Force -ErrorAction SilentlyContinue
-    regsvr32 -s "C:\Windows\System32\navsip.dll" 
-
-    Log "Configuring GIT login"
-
-    $ENV:PATH=”$ENV:PATH;C:\Program Files\Git\bin”  #for git command to be recognized
-    git config --global user.email "stdextv2@gmail.com"
-    git config --global user.name "1clickfactory-student"
-    git config --global merge.tool p4merge
-    git config --global mergeool.p4merge.path 'C:\Program Files (x86)\Perforce\p4merge.exe'	
-	
+    Log "Installing O365"
+    $OfficeInstallURL = "https://www.dropbox.com/s/zuml2cyeqjnhvm5/Setup.X64.en-us_O365ProPlusRetail_08238891-9e8e-4522-95f3-0763ab460a7c_TX_DB_b_48_.exe?dl=1"
+    $OfficeInstall = "c:\download\O365.exe"
+    Invoke-WebRequest -Uri $OfficeInstallURL -OutFile $OfficeInstall
+    Start-Process $OfficeInstall -Wait
 } catch {
     Log -color Red -line ($Error[0].ToString() + " (" + ($Error[0].ScriptStackTrace -split '\r\n')[0] + ")")
 }
