@@ -17,9 +17,9 @@
         docker rm $_ -f | Out-Null
     }
 
-    $BackupsUrl = "https://www.dropbox.com/s/5q8lrp3a3tqkcry/Demo%20Database%20NAV%20%2811-0%29%201CF.bak?dl=1"
+    $BackupsUrl = "https://www.dropbox.com/s/x9w1pbgbpo20bax/Demo%20Database%20NAV%20%2811-0%29%201CF%202016%20Data.bak?dl=1"
     $BackupFolder = "C:\DOWNLOAD\Backups"
-    $Filename = "$BackupFolder\Demo Database NAV (11-0) 1CF.bak"
+    $Filename = "$BackupFolder\Demo Database NAV (11-0) 1CF 2016 Data.bak"
     New-Item $BackupFolder -itemtype directory -ErrorAction ignore | Out-Null
     if (!(Test-Path $Filename)) {
         Download-File -SourceUrl $BackupsUrl  -destinationFile $Filename
@@ -59,6 +59,7 @@
         $myScripts += 'C:\DEMO\RestartNST.ps1';  
     
         Log "Running $imageName (this will take a few minutes)"
+        
         New-NavContainer -accept_eula `
             -containerName $containerName `
             -auth Windows `
@@ -69,8 +70,7 @@
             -myScripts $myscripts `
             -licenseFile 'c:\demo\license.flf' `
             -imageName $imageName `
-            -includeTestToolkit
-                       
+            -includeTestToolkit                               
    
 
         $country = Get-NavContainerCountry -containerOrImageName $imageName
@@ -137,7 +137,7 @@
     docker pull $img3
 
     $containerName = 'NAV2018CU6NL'
-    $additionalParameters = @("--env bakfile=""C:\Run\my\Demo Database NAV (11-0) 1CF.bak""",
+    $additionalParameters = @("--env bakfile=""C:\Run\my\Demo Database NAV (11-0) 1CF 2016 Data.bak""",
         "--env RemovePasswordKeyFile=N"                             
     )
     $myScripts = @()
