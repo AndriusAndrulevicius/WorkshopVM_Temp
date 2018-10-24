@@ -81,7 +81,7 @@
     New-DesktopShortcut -Name "PowerShell ISE" -TargetPath "C:\Windows\system32\WindowsPowerShell\v1.0\powershell_ise.exe" -WorkingDirectory "c:\demo"
     New-DesktopShortcut -Name "Command Prompt" -TargetPath "C:\Windows\system32\cmd.exe" -WorkingDirectory "c:\demo"
     New-DesktopShortcut -Name "Nav Container Helper" -TargetPath "powershell.exe" -Arguments "-noexit ""& { Write-NavContainerHelperWelcomeText }""" -WorkingDirectory "C:\demo"
-    New-DesktopShortcut -Name "Workshop Files" -TargetPath "C:\WorkshopFiles\" #1CF
+    #New-DesktopShortcut -Name "Workshop Files" -TargetPath "C:\WorkshopFiles\" #1CF
 
     Log -color Green "Desktop setup complete!"
 
