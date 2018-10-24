@@ -237,7 +237,7 @@ git config --global user.name "ExtensionV2Training"
 git config --global merge.tool p4merge
 git config --global mergeool.p4merge.path ''C:\Program Files\Perforce\p4merge.exe''
 ')| Add-Content $downloadWorkshopFilesScript |Out-Null
-
+#>
 $startupAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $setupStartScript
 $startupTrigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -TaskName "SetupStart" `
@@ -245,6 +245,6 @@ Register-ScheduledTask -TaskName "SetupStart" `
                        -Trigger $startupTrigger `
                        -RunLevel Highest `
                        -User System | Out-Null
-#>
+
 Log "Restarting computer and start Installation tasks"
 Restart-Computer -Force
